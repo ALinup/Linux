@@ -1,0 +1,8 @@
+这个情况是linux系统涉及到，top看到占用cpu0 100%。处理方法如下
+centos6 处理方法
+ 
+编辑/boot/grub/grub.conf 加到kernel 这一行的后面加  ipmi_si.tryacpi=0 ipmi_si.trydmi=0 ipmi_si.trydefaults=0 即可
+ 
+centos7处理方法
+ 
+sed -i "s/quiet/ipmi_si.tryacpi=0 ipmi_si.trydmi=0 ipmi_si.trydefaults=0 quiet/g" /boot/grub2/grub.cfg

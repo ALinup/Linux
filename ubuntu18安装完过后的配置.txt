@@ -1,0 +1,15 @@
+1、首先为root用户设置密码
+sudo root
+2、再重新启动系统用root用户登陆
+3、删除普通用户
+userdel 用户名
+4、修改可以用root用户进行ssh登陆
+vi /etc/ssh/sshd_config
+添加一条PermitRootLogin yes
+5、保存退出过后，重启ssh服务
+service sshd restart
+6、增加ip
+vi /etc/netplan
+在现在ip后面添加其他ip，格式跟原ip一样
+7、重启网卡
+netplan apply

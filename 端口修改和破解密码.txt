@@ -1,0 +1,34 @@
+修改ssh端口号:
+centos6:
+(1)vi /etc/ssh/sshd_config，增加端口号
+(2)开放端口:-A INPUT -p tcp -m state --state NEW -m tcp --dport 端口号 -j ACCEPT
+防火墙配置文件位置:/etc/sysconfig/iptables
+(3)防火墙重启，使配置生效:
+service iptables restart
+(4)重启ssh服务:service sshd restart
+(5)用新端口号连接成功ssh后，删除第(1)步中的22号端口，并在防火墙中关闭该端口
+
+centos7:
+(1)vi /etc/ssh/sshd_config，增加端口号
+(2)向防火墙添加端口:firewall-cmd --zone=public --add-port=端口号/tcp --permanent（端口配置文件：/etc/firewalld/zones/public.xml）
+(3)reaload 防火墙规则: firewall-cmd --reload
+(4)selinux放行ssh端口
+(5)重启ssh:service sshd restart
+(6)用新端口号连接成功ssh后，删除删除第(1)步中的22号端口，并在防火墙中关闭该端口
+
+ubuntu:
+(1)vi /etc/ssh/sshd_config，增加端口号，并且打开PermitRootLogin yes
+(2)向防火墙中添加端口：ufw allow 端口号
+(3)重启防火墙：ufw reload
+(4)重启ssh:service sshd restart
+(5)用新端口连接成功ssh后，删除第(1)步中的22端口，并在防火墙中关闭该端口
+
+破解密码:
+centos6:开机读秒时按e，然后再按e，然后选择第二项，然后按e，然后在quiet后面加上空格和single，
+再按enter回到grup界面，再选择第二项，再按b进入单用户模式，再输入passwd，再输入两次密码，输入reboot，重启系统，完成！
+
+centos7:开机按e，然后选择第二项，再按e，在linux16那行末尾加上init=/bin/sh，然后crtl+x执行，输入mount -o remount,rw /，
+再输入passwd，输入两次密码，然后输入touch /.autorelabel,接着输入exec /sbin/init，系统自动重启，完成！
+
+ubuntu:开机按esc,回车并选择第二项，再按e，在linux那行，把recovery nomodeset改为quiet splash rw init=/bin/bash，
+按ctrl+x执行，输入passwd 用户名(不输入用户名表示默认修改root密码)，输入两次密码，重启系统，完成！

@@ -1,0 +1,11 @@
+ubuntu18，ubuntu16:
+apt-get install speedtest-cli
+speedtest-cli
+
+centos7:
+下载安装包：
+wget https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
+赋予可执行权限：
+chmod +x speedtest.py
+运行：
+./speedtest.py

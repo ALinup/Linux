@@ -1,0 +1,4 @@
+nano /etc/network/interfaces
+按Ctrl+x退出，然后按Y
+/etc/init.d/networking restart
+重启生效

@@ -1,0 +1,22 @@
+更换阿里源/163源：
+
+1、进入yum源配置文件，备份当前的源
+
+[root@localhost ~]#cd /etc/yum.repos.d
+
+[root@localhost yum.repos.d]# cp /CentOS-Base.repo /CentOS-Base-repo.bak
+2、下载阿里/163 yum源配置文件
+
+[root@localhost yum.repos.d]# wget http://mirrors.aliyun.com/repo/Centos-7.repo
+[root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
+3、清理一下旧包
+
+[root@localhost yum.repos.d]# yum clean all
+
+4、把下载下来文件 Centos-7.repo/CentOS7-Base-163.repo设置成为默认源 
+
+[root@localhost yum.repos.d]# mv Centos-7.repo CentOS-Base.repo
+[root@localhost yum.repos.d]# mv CentOS7-Base-163.repo CentOS-Base.repo
+5、生成缓存即可用阿里/163源了
+
+[root@localhost yum.repos.d]# yum makecache

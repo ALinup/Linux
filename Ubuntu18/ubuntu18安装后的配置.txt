@@ -1,15 +1,15 @@
-1¡¢Ê×ÏÈÎªrootÓÃ»§ÉèÖÃÃÜÂë
+1ã€é¦–å…ˆä¸ºrootç”¨æˆ·è®¾ç½®å¯†ç 
 sudo root
-2¡¢ÔÙÖØĞÂÆô¶¯ÏµÍ³ÓÃrootÓÃ»§µÇÂ½
-3¡¢É¾³ıÆÕÍ¨ÓÃ»§
-userdel ÓÃ»§Ãû
-4¡¢ĞŞ¸Ä¿ÉÒÔÓÃrootÓÃ»§½øĞĞsshµÇÂ½
+2ã€å†é‡æ–°å¯åŠ¨ç³»ç»Ÿç”¨rootç”¨æˆ·ç™»é™†
+3ã€åˆ é™¤æ™®é€šç”¨æˆ·
+userdel ç”¨æˆ·å
+4ã€ä¿®æ”¹å¯ä»¥ç”¨rootç”¨æˆ·è¿›è¡Œsshç™»é™†
 vi /etc/ssh/sshd_config
-Ìí¼ÓÒ»ÌõPermitRootLogin yes
-5¡¢±£´æÍË³ö¹ıºó£¬ÖØÆôssh·şÎñ
+æ·»åŠ ä¸€æ¡PermitRootLogin yes
+5ã€ä¿å­˜é€€å‡ºè¿‡åï¼Œé‡å¯sshæœåŠ¡
 service sshd restart
-6¡¢Ôö¼Óip
-vi /etc/netplan
-ÔÚÏÖÔÚipºóÃæÌí¼ÓÆäËûip£¬¸ñÊ½¸úÔ­ipÒ»Ñù
-7¡¢ÖØÆôÍø¿¨
+6ã€å¢åŠ ip
+vi /etc/netplan/50-cloud-init.yaml
+åœ¨ç°åœ¨ipåé¢æ·»åŠ å…¶ä»–ipï¼Œæ ¼å¼è·ŸåŸipä¸€æ ·
+7ã€é‡å¯ç½‘å¡
 netplan apply

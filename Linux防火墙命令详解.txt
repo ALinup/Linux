@@ -1,0 +1,76 @@
+centos6:
+查看防火墙状态：
+service iptables status
+停止防火墙：
+service iptables stop
+启动防火墙：
+service iptables start
+重启防火墙：
+service iptables restart
+永久关闭防火墙：
+chkconfig iptables off
+永久关闭后重启：
+chkconfig iptables on
+开启端口
+vim /etc/sysconfig/iptables
+加入以下代码：
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 端口号 -j ACCEPT
+保存退出后重启防火墙：
+service iptables restart
+封单个IP：
+iptables -I INPUT -s ip地址 -j DROP
+封IP段：
+iptables -I INPUT -s ip地址/16 -j DROP
+
+centos7:
+查看firewall服务状态：
+systemctl status firewalld
+查看firewall的状态：
+firewall-cmd --state
+开启firewalld.service服务
+service firewalld start
+重启firewalld.service服务
+service firewalld restart
+关闭firewalld.service服务
+service firewalld stop
+查看防火墙规则：
+firewall-cmd --list-all
+查询端口是否开放：
+firewall-cmd --query-port=端口号/tcp
+开放端口：
+firewall-cmd --permanent --add-port=端口号/tcp
+移除端口：
+firewall-cmd --permanent --remove-port=端口号/tcp
+重启防火墙（修改配置后要重启防火墙）：
+firewall-cmd --reload
+参数解释：
+firewall-cmd:是Linux提供的操作firewall的一个工具；
+--permanent:表示设置为持久；
+--add-port:标记添加的端口。
+添加某个IP到黑名单：
+vim /etc/hosts.deny
+添加如下信息：
+sshd:ip地址:deny
+添加某个IP到白名单：
+vim /etc/hosts.allow
+sshd:ip地址:allow
+
+ubuntu:
+查看防火墙当前状态：
+ufw status
+开启防火墙：
+ufw enable
+关闭防火墙：
+ufw disable
+查看防火墙版本：
+ufw version
+默认允许外部访问本机：
+ufw default allow
+默认拒绝外部访问本机：
+ufw default deny
+允许外部访问某端口：
+ufw allow 端口号
+拒绝外部访问某端口：
+ufw deny 端口号
+允许某个IP地址访问本机所有端口：
+ufw allow from IP地址

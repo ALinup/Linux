@@ -1,0 +1,5 @@
+安装lrzsz：
+yum install -y lrzsz
+用rz将本地文件上传到服务器，用sz 文件路径，将服务器文件下载到本地
+[root@localhost ~]# sz 服务器上文件路径
+

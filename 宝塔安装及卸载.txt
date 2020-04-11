@@ -1,14 +1,14 @@
-±¦Ëş¹ÙÍø£ºbt.cn
-centos°²×°±¦Ëş7.0:
+å®å¡”å®˜ç½‘ï¼šbt.cn
+centoså®‰è£…å®å¡”7.0:
 yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh
-°²×°Íê³É¹ıºó£¬¿ÉÒÔ´î½¨lamp£¨linux+apache+mysql+php£©»òÕßlnmp£¨linux+nginx+mysql+php£©»·¾³¡£
-Ğ¶ÔØ±¦Ëş£º
+å®‰è£…å®Œè¿‡åï¼Œå¯ä»¥æ­å»ºlampï¼ˆlinux+apache+mysql+phpï¼‰æˆ–è€…lnmpï¼ˆlinux+nginx+mysql+phpï¼‰ç¯å¢ƒã€‚
+å¸è½½å®å¡”ï¼š
 1.wget http://download.bt.cn/install/bt-uninstall.sh
 2.sh bt-uninstall.sh
-3.¸ù¾İÌáÊ¾ÊäÈë1»ò2¼´¿É
+3.æ ¹æ®æç¤ºè¾“å…¥1æˆ–2å³å¯
 
-²éÑ¯±¦ËşĞÅÏ¢£º
+æŸ¥è¯¢å®å¡”ä¿¡æ¯ï¼š
 bt 
 14
-»òÕß
+æˆ–è€…
 bt default

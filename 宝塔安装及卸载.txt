@@ -1,0 +1,14 @@
+宝塔官网：bt.cn
+centos安装宝塔7.0:
+yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh
+安装完成过后，可以搭建lamp（linux+apache+mysql+php）或者lnmp（linux+nginx+mysql+php）环境。
+卸载宝塔：
+1.wget http://download.bt.cn/install/bt-uninstall.sh
+2.sh bt-uninstall.sh
+3.根据提示输入1或2即可
+
+查询宝塔信息：
+bt 
+14
+或者
+bt default

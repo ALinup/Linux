@@ -1,56 +1,57 @@
-£¨1£©°²×°MariaDB
-°²×°MariaDBÊı¾İ¿â¼°MariaDB¿Í»§¶Ë¹¤¾ß:
+ï¼ˆ1ï¼‰å®‰è£…MariaDB
+å®‰è£…MariaDBæ•°æ®åº“åŠMariaDBå®¢æˆ·ç«¯å·¥å…·:
 yum -y install mariadb-server mariadb
-Æô¶¯MariaDBÊı¾İ¿â:
+å¯åŠ¨MariaDBæ•°æ®åº“:
 systemctl start mariadb
-ÎªMariaDBÊı¾İ¿â¹ÜÀíÔ±ÉèÖÃÃÜÂë:
-mysqladmin -uroot password "ÃÜÂë"
-µÇÂ¼MariaDBÊı¾İ¿â:
-mysql -uroot -pÃÜÂë
-(2)°²×°Zabbix
-°²×°Zabbix rpm°ü²Ö¿â:
+ä¸ºMariaDBæ•°æ®åº“ç®¡ç†å‘˜è®¾ç½®å¯†ç :
+mysqladmin -uroot password "å¯†ç "
+ç™»å½•MariaDBæ•°æ®åº“:
+mysql -uroot -på¯†ç 
+(2)å®‰è£…Zabbix
+å®‰è£…Zabbix rpmåŒ…ä»“åº“:
 rpm -vhi http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm
-°²×°zabbix-server-mysql¡¢zabbix-web-mysql¡¢zabbix-agent:
+å®‰è£…zabbix-server-mysqlã€zabbix-web-mysqlã€zabbix-agent:
 yum -y install zabbix-server-mysql zabbix-web-mysql zabbix-agent
-µÇÂ½mariadbÊı¾İ¿â²¢´´½¨zabbixÊı¾İ¿âÓÃ»§£º
+ç™»é™†mariadbæ•°æ®åº“å¹¶åˆ›å»ºzabbixæ•°æ®åº“ç”¨æˆ·ï¼š
 create database zabbix character set utf8 collate utf8_bin;
-¸øzabbixÓÃ»§ÊÚÈ¨£º
-grant all privileges on zabbix.* to 'zabbix'@'localhost' identified by 'ÃÜÂë';
-exitÍË³ömariadbÊı¾İ¿â£¬µ¼ÈëÊı¾İ¿âSQL½Å±¾ÎÄ¼ş£º
-zcat  /usr/share/doc/zabbix-server-mysql-3.4.1/create.sql.gz |mysql -u zabbix -pÃÜÂë  zabbix
-1¡¢¼ì²éÅäÖÃÎÄ¼ş£º
+ç»™zabbixç”¨æˆ·æˆæƒï¼š
+grant all privileges on zabbix.* to 'zabbix'@'localhost' identified by 'å¯†ç ';
+exité€€å‡ºmariadbæ•°æ®åº“ï¼Œå¯¼å…¥æ•°æ®åº“SQLè„šæœ¬æ–‡ä»¶ï¼š
+zcat  /usr/share/doc/zabbix-server-mysql-3.4.1/create.sql.gz |mysql -u zabbix -på¯†ç   zabbix
+1ã€æ£€æŸ¥é…ç½®æ–‡ä»¶ï¼š
 vim /etc/zabbix/zabbix_server.conf
-//Ê¡ÂÔ²¿·ÖÄÚÈİ
-DBHost=localhost   //È¥µô×¢ÊÍ
-DBName=zabbix    //²»±ä
-DBUser=zabbix     //²»±ä
-DBPassword=password@456  //È¥µô×¢ÊÍ
+//çœç•¥éƒ¨åˆ†å†…å®¹
+DBHost=localhost   //å»æ‰æ³¨é‡Š
+DBName=zabbix    //ä¸å˜
+DBUser=zabbix     //ä¸å˜
+DBPassword=password@456  //å»æ‰æ³¨é‡Š
 
-±à¼­Zabbix agentµÄÅäÖÃÎÄ¼ş£¬±ØĞëÖ¸¶¨zabbix serverµÄIPµØÖ·£¬ÔÚÃ¿Ì¨°²×°ÁËagentµÄÖ÷»úÉÏ¶¼ÒªÅäÖÃ¡£
+ç¼–è¾‘Zabbix agentçš„é…ç½®æ–‡ä»¶ï¼Œå¿…é¡»æŒ‡å®šzabbix serverçš„IPåœ°å€ï¼Œåœ¨æ¯å°å®‰è£…äº†agentçš„ä¸»æœºä¸Šéƒ½è¦é…ç½®ã€‚
 vim  /etc/zabbix/zabbix_agentd.conf
-Server=127.0.0.1                //¿Í»§¶Ë±»¶¯µÈ´ıÖ¸¶¨·şÎñÆ÷À´²éÑ¯Êı¾İ
+Server=127.0.0.1                //å®¢æˆ·ç«¯è¢«åŠ¨ç­‰å¾…æŒ‡å®šæœåŠ¡å™¨æ¥æŸ¥è¯¢æ•°æ®
     
-ServerActive=127.0.0.1     //¿Í»§¶ËÖ÷¶¯Ìá½»Êı¾İµ½Ö¸¶¨·şÎñÆ÷
+ServerActive=127.0.0.1     //å®¢æˆ·ç«¯ä¸»åŠ¨æäº¤æ•°æ®åˆ°æŒ‡å®šæœåŠ¡å™¨
 
-Hostname=linux-server001  //ĞŞ¸Ä
-//ÒòÎª±¾»ú¾ÍÊÇzabbix server£¬ËùÒÔÖ¸¶¨µÄµØÖ·¾ÍÊÇ±¾»ú¼´¿É£¡
+Hostname=linux-server001  //ä¿®æ”¹
+//å› ä¸ºæœ¬æœºå°±æ˜¯zabbix serverï¼Œæ‰€ä»¥æŒ‡å®šçš„åœ°å€å°±æ˜¯æœ¬æœºå³å¯ï¼
 
-2¡¢°²×°Zabbix Web½Ó¿Ú
-±à¼­Apache·şÎñÆ÷Õë¶ÔZabbixµÄÇ°¶ËÅäÖÃÎÄ¼ş£¬ÉèÖÃÊ±ÇøÓëµ±Ç°ÏµÍ³Ê±ÇøÒ»ÖÂ¼´¿É£¡ÄÚÈİÈçÏÂ£º
+2ã€å®‰è£…Zabbix Webæ¥å£
+ç¼–è¾‘ApacheæœåŠ¡å™¨é’ˆå¯¹Zabbixçš„å‰ç«¯é…ç½®æ–‡ä»¶ï¼Œè®¾ç½®æ—¶åŒºä¸å½“å‰ç³»ç»Ÿæ—¶åŒºä¸€è‡´å³å¯ï¼å†…å®¹å¦‚ä¸‹ï¼š
 vim /etc/httpd/conf.d/zabbix.conf 
 php_value date.timezone Asia/Shanghai
-//È¥µô×¢ÊÍ£¬ĞŞ¸Ä¼´¿É£¡
+//å»æ‰æ³¨é‡Šï¼Œä¿®æ”¹å³å¯ï¼
 
-3¡¢ÖØÆôËùÓĞ·şÎñ
+3ã€é‡å¯æ‰€æœ‰æœåŠ¡
 systemctl stop firewalld
-²é¿´selinuxÊÇ·ñ¹Ø±Õ£¬Èç¹ûÃ»ÓĞ£¬ĞŞ¸ÄselinuxÎªdisabled£¬ÖØÆôÉúĞ§£º
+æŸ¥çœ‹selinuxæ˜¯å¦å…³é—­ï¼Œå¦‚æœæ²¡æœ‰ï¼Œä¿®æ”¹selinuxä¸ºdisabledï¼Œé‡å¯ç”Ÿæ•ˆï¼š
 setenforce 0
 systemctl restart zabbix-server.service
 systemctl restart zabbix-agent.service
 systemctl restart httpd
 
-£¨3£©¿Í»§¶Ë·ÃÎÊ
-ÊäÈë£ºip/zabbix/setup.php
-Ò»Ö±µã»÷ÏÂÒ»²½£¬ÃÜÂëÌîĞ´zabbixÓÃ»§·ÃÎÊÊı¾İ¿âµÄÃÜÂë£¬Name×Ô¶¨Òå£¬Ä¬ÈÏµÇÂ½ÓÃ»§ÃûÎª£ºAdmin  ÃÜÂëÎª£ºzabbix
+ï¼ˆ3ï¼‰å®¢æˆ·ç«¯è®¿é—®
+è¾“å…¥ï¼šip/zabbix/setup.php
+ä¸€ç›´ç‚¹å‡»ä¸‹ä¸€æ­¥ï¼Œå¯†ç å¡«å†™zabbixç”¨æˆ·è®¿é—®æ•°æ®åº“çš„å¯†ç ï¼ŒNameè‡ªå®šä¹‰ï¼Œé»˜è®¤ç™»é™†ç”¨æˆ·åä¸ºï¼šAdmin  å¯†ç ä¸ºï¼šzabbix
+OKï¼Œzabbixæ­å»ºå®Œæˆï¼
 
-OK£¬zabbix´î½¨Íê³É£¡
+è·å–zabbixè½¯ä»¶åŒ…ã€ä¿®æ”¹ç”¨æˆ·åå¯†ç ã€è®¾ç½®ä¸­æ–‡ã€ç›‘æ§è·¯ç”±å™¨ã€LinuxæœåŠ¡å™¨ã€WindowsæœåŠ¡å™¨è¯·å…³æ³¨å¾®ä¿¡å…¬ä¼—å·ï¼šç§‘æŠ€æ”¯æ’‘è€…ã€‚

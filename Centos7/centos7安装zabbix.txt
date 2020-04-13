@@ -1,0 +1,56 @@
+（1）安装MariaDB
+安装MariaDB数据库及MariaDB客户端工具:
+yum -y install mariadb-server mariadb
+启动MariaDB数据库:
+systemctl start mariadb
+为MariaDB数据库管理员设置密码:
+mysqladmin -uroot password "密码"
+登录MariaDB数据库:
+mysql -uroot -p密码
+(2)安装Zabbix
+安装Zabbix rpm包仓库:
+rpm -vhi http://repo.zabbix.com/zabbix/3.0/rhel/7/x86_64/zabbix-release-3.0-1.el7.noarch.rpm
+安装zabbix-server-mysql、zabbix-web-mysql、zabbix-agent:
+yum -y install zabbix-server-mysql zabbix-web-mysql zabbix-agent
+登陆mariadb数据库并创建zabbix数据库用户：
+create database zabbix character set utf8 collate utf8_bin;
+给zabbix用户授权：
+grant all privileges on zabbix.* to 'zabbix'@'localhost' identified by '密码';
+exit退出mariadb数据库，导入数据库SQL脚本文件：
+zcat  /usr/share/doc/zabbix-server-mysql-3.4.1/create.sql.gz |mysql -u zabbix -p密码  zabbix
+1、检查配置文件：
+vim /etc/zabbix/zabbix_server.conf
+//省略部分内容
+DBHost=localhost   //去掉注释
+DBName=zabbix    //不变
+DBUser=zabbix     //不变
+DBPassword=password@456  //去掉注释
+
+编辑Zabbix agent的配置文件，必须指定zabbix server的IP地址，在每台安装了agent的主机上都要配置。
+vim  /etc/zabbix/zabbix_agentd.conf
+Server=127.0.0.1                //客户端被动等待指定服务器来查询数据
+    
+ServerActive=127.0.0.1     //客户端主动提交数据到指定服务器
+
+Hostname=linux-server001  //修改
+//因为本机就是zabbix server，所以指定的地址就是本机即可！
+
+2、安装Zabbix Web接口
+编辑Apache服务器针对Zabbix的前端配置文件，设置时区与当前系统时区一致即可！内容如下：
+vim /etc/httpd/conf.d/zabbix.conf 
+php_value date.timezone Asia/Shanghai
+//去掉注释，修改即可！
+
+3、重启所有服务
+systemctl stop firewalld
+查看selinux是否关闭，如果没有，修改selinux为disabled，重启生效：
+setenforce 0
+systemctl restart zabbix-server.service
+systemctl restart zabbix-agent.service
+systemctl restart httpd
+
+（3）客户端访问
+输入：ip/zabbix/setup.php
+一直点击下一步，密码填写zabbix用户访问数据库的密码，Name自定义，默认登陆用户名为：Admin  密码为：zabbix
+
+OK，zabbix搭建完成！

@@ -1,0 +1,30 @@
+1、首先编辑配置文件my.cnf
+vim /etc/my.cnf
+在# log-bin下面加入如下内容：
+log-bin=mysql-bin
+binlog-format=mixed
+重启mysqld服务
+2、确认数据库是否开启binlog日志
+show variables like 'log_%';
+如果为 ON 则表示开启
+3、删除数据库中某条数据恢复方式（删除之前需记得删除数据的ID）
+使用如下命令，查看最新的binlog日志文件：
+show master status;
+show binlog events in '日志文件名称';
+退出mysql，使用以下命令：
+mysqlbinlog /var/lib/mysql/日志文件名称 --start-position 初始偏移量的位置 --stop-position 结束偏移量的位置 | mysql -u root -p 数据库名称;
+通过ID，查看该数据插入操作，初始偏移量为BEGIN前面那个值，结束偏移量为COMMIT后面那个值
+4、误删了数据表的恢复方式
+使用如下命令，查看最新的binlog日志文件：
+show master status;
+show binlog events in '日志文件名称';
+退出mysql，使用以下命令：
+mysqlbinlog /var/lib/mysql/日志文件名称 --start-position 初始偏移量的位置 --stop-position 结束偏移量的位置 | mysql -u root -p 数据库名称;
+初始偏移量为创建表记录前面的数值，结束偏移量为删除表之前COMMIT后面那个值
+5、误删了数据库的恢复方式
+使用如下命令，查看最新的binlog日志文件：
+show master status;
+show binlog events in '日志文件名称';
+退出mysql，使用以下命令：
+mysqlbinlog /var/lib/mysql/日志文件名称 --start-position 初始偏移量的位置 --stop-position 结束偏移量的位置 | mysql -u root -p;
+初始偏移量为创建数据库记录前面的数值，结束偏移量为删除数据库之前COMMIT后面那个值

@@ -3,5 +3,5 @@
 wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 rpm -ivh mysql-community-release-el7-5.noarch.rpm
 yum install -y mysql-server
-service mysqld start
+systemctl start mysqld
 安装成功，默认root用户密码为空

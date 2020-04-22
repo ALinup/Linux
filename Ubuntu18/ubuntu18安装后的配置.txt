@@ -1,5 +1,5 @@
 1、首先为root用户设置密码
-sudo root
+sudo passwd root
 2、再重新启动系统用root用户登陆
 3、删除普通用户
 userdel 用户名

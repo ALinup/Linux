@@ -1,0 +1,73 @@
+本教程使用Xshell软件进行操作。
+1、安装java和tomcat
+在这里系统自带的java我们不使用，我们使用下载的最新版java版本。因为jdk是java程序运行的环境，解压即能用，不需要修改。
+第一步：上传、解压安装jdk
+上传可以使用rz命令
+上传、下载命令安装：yum install -y lrzsz
+tar xvf jdk-8u161-linux-x64.tar.gz -C /usr/local/
+第二步：更改解压后的名称，方便识别
+mv /usr/local/jdk1.8.0_161/ /usr/local/java/
+第三步：上传、解压安装tomcat
+tar xvf apache-tomcat-9.0.5.tar.gz -C /usr/local/
+mv /usr/local/apache-tomcat-9.0.5/ /usr/local/tomcat/
+
+2. Tomcat 目录结构说明
+[root@localhost local]# cd tomcat
+[root@localhost tomcat]# ls
+bin  BUILDING.txt  conf  CONTRIBUTING.md  lib  LICENSE  logs  NOTICE  README.md  RELEASE-NOTES  RUNNING.txt  temp  webapps  work
+bin             --启动命令目录
+conf           --配置文件目录      ＊重点
+lib              --库文件目录
+logs           --日志文件目录      ＊重点
+temp         --临时缓存文件
+webapps  --web应用家目录    ＊重点
+work         --工作缓存目录
+
+3、修改Tomcat环境变量
+Tomcat是需要jdk才能运行，上面解压安装后，还需要在tomcat里配置jdk的目录
+方法：定义在单个tomcat的启动和关闭程序里
+把startup.sh和shutdown.sh这两个脚本里的最前面加上下面一段：
+export JAVA_HOME=/usr/local/java
+export TOMCAT_HOME=/usr/local/tomcat
+export CATALINA_HOME=/usr/local/tomcat
+export CLASS_PATH=$JAVA_HOME/bin/lib:$JAVA_HOME/jre/lib:$JAVA_HOME/lib/tool.jar
+export PATH=$PATH:/usr/local/java/bin:/usr/local/tomcat/bin
+参数说明 ：
+classpath是指定你在程序中所使用的类（.class）文件所在的位置。
+path是系统用来指定可执行文件的完整路径。
+
+4、启动Tomcat
+前面安装和配置好后，下面就可以启动了，启动时会有下面这一段输出。
+[root@localhost tomcat]# /usr/local/tomcat/bin/startup.sh
+Using CATALINA_BASE:   /usr/local/tomcat
+Using CATALINA_HOME:   /usr/local/tomcat
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp
+Using JRE_HOME:        /usr/local/java
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
+Tomcat started.
+查看端口，tomcat默认是8080端口
+[root@localhost tomcat]# lsof -i:8080
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    23460 root   55u  IPv6  35590      0t0  TCP *:webcache (LISTEN)
+关闭tomcat方法
+[root@localhost tomcat]# /usr/local/tomcat/bin/shutdown.sh
+使用本机浏览器打开测试
+IP地址:8080
+
+5、修改Tomcat监听端口
+vim /usr/local/tomcat/conf/server.xml
+ 69     <Connector port="80" protocol="HTTP/1.1"               ----把8080改成80的话，重启后就监听80端口
+ 70                connectionTimeout="20000"
+ 71                redirectPort="8443" />
+在vim中可以在命令行界面输入:set number设置行号
+
+6、目录布署
+Tomcat的数据目录（网站家目录）
+/usr/local/tomcat/webapps/ROOT/
+把test目录与ROOT同级或者是在ROOT的下一级都是可行的
+[root@localhost tomcat]# mkdir /usr/local/tomcat/webapps/test      --目录名字可自定义
+[root@localhost test]# vim /usr/local/tomcat/webapps/test/index.jsp     --自定义页面内容，如下面的话（不要写中文）
+welcome to here!
+ 使用浏览器打开网页进行测试
+IP地址/test/     --这个是端口改为80的打开浏览器网页的方法
+IP地址:8080/test/     --这个是端口为8080的打开浏览器网页的方法

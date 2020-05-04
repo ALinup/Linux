@@ -1,0 +1,40 @@
+1. 将Nginx放到yum repro库中（yum中默认没有Nginx）
+rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+2. 查看Nginx信息
+yum info nginx
+
+3. 通过yum安装Nginx
+yum -y install nginx
+
+4. 查看Nginx服务状态
+systemctl status nginx
+
+5. 启动Ngin服务
+systemctl start nginx
+如果提示错误，使用如下命令查看详细提示：
+systemctl status nginx.service
+如果端口冲突，修改nginx配置文件：
+vim /etc/nginx/conf.d/default.conf
+
+6.查看nginx服务器是否启动成功
+systemctl status nginx
+
+7. 设置Nginx开机自启
+systemctl enable nginx.service
+查看是否设置成成功
+systemctl list-unit-files | grep nginx
+同时通过上述方法设置nginx-debug.service开机自启
+
+8. 测试Nginx是否安装成功
+ 本机命令行输入如下命令，可以看到一段html代码，下面有显示 Thank you for using nginx. 即表示安装成功。
+curl http://127.0.0.1:80
+或者本机浏览器输入 IP地址:80 看到如下页面即可表示安装成功。
+
+9.Nginx常见操作
+查看nginx版本：
+nginx -v
+卸载nginx:
+yum remove nginx
+查看是否卸载完成：
+which nginx

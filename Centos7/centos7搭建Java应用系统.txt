@@ -1,0 +1,81 @@
+1. 环境介绍
+linux + apache + php + mysql --lamp环境 这是php环境
+linux + nginx + php + mysql --lnmp环境 这是php环境
+linux + tomcat + jsp + mysql --ljtm环境 这是java环境
+
+2. 软件包
+jdk-8u161-linux-x64.tar.gz --java包
+apache-tomcat-9.0.5.tar.gz --tomcat包
+mysql-connector-java-5.1.45.tar.gz --tomcat连接mysql的工具包
+JspRun_v6.0.zip --java语言开发的应用系统（网上可以自行下载）
+
+3. 开始部署
+第一步：解压应用系统
+上传JspRun_v6.0.zip软件压缩包，使用rz命令
+解压应用系统：
+unzip JspRun_6.0.zip -d /usr/local/tomcat/webapps/
+更改名称：
+[root@localhost tomcat]# mv ./webapps/JspRun\!_6.0.0_Source_UTF8/ ./webapps/jsprun/
+移动应用至前面文件夹：
+mv source/WebRoot/* ./
+
+第二步：上传、解压java连接mysql的工具包
+[root@localhost ~]# tar xvf mysql-connector-java-5.1.46.tar.gz -C /usr/src/
+解压后，把连接工具拷到tomcat的应用目录
+[root@localhost jsprun]# cp /usr/src/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar  /usr/local/tomcat/webapps/jsprun/WEB-INF/
+
+第三步：安装mysql数据库（注意：CentOS 7版本开始，系统自带的数据库为mariadb，已经舍弃mysql数据库）
+[root@localhost WEB-INF]# yum -y install mariadb*
+[root@localhost WEB-INF]# id mysql
+uid=27(mysql) gid=27(mysql) groups=27(mysql)
+如果没有mysql这个用户，手工创建一个mysql用户
+groupadd -g 27 mysql
+useradd -u 27 mysql -g mysql
+启动数据库
+[root@localhost WEB-INF]# systemctl restart mariadb
+登陆数据库，创建java应用所需要的帐号和库
+[root@localhost WEB-INF]# mysql     #登录数据库
+MariaDB [(none)]> create database bbs;     #创建bbs库
+MariaDB [(none)]> show databases;     #查看所有库
+MariaDB [(none)]> grant all on bbs.* to 'bbs'@'localhost' identified by '123';     #授权
+MariaDB [(none)]> flush privileges;     #刷新
+MariaDB [(none)]> select user,host,password from mysql.user;     #查看user表允许登录的用户
+MariaDB [(none)]> exit     #退出
+
+第四步：修改java应用配置连接数据库
+[root@localhost jsprun]# vim /usr/local/tomcat/webapps/jsprun/config.properties
+dbhost = localhost     #修改数据库地址
+dbport = 3306     #端口
+dbuser = bbs     #连接用户名
+dbpw = 123     #密码
+dbname = bbs     #库名
+pconnect = 0     #持久连接
+
+tablepre = jrun_
+
+database = mysql
+dbcharset =
+charset = utf-8
+headercharset = 0
+tplrefresh = 1     #风格模板自动刷新开关
+version = 5.1
+
+第五步：重启tomcat才能生效
+[root@localhost jsprun]# /usr/local/tomcat/bin/shutdown.sh     #关闭tomcat
+Using CATALINA_BASE:   /usr/local/tomcat
+Using CATALINA_HOME:   /usr/local/tomcat
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp
+Using JRE_HOME:        /usr/local/java
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
+
+[root@localhost jsprun]# /usr/local/tomcat/bin/startup.sh     #启动tomcat
+Using CATALINA_BASE:   /usr/local/tomcat
+Using CATALINA_HOME:   /usr/local/tomcat
+Using CATALINA_TMPDIR: /usr/local/tomcat/temp
+Using JRE_HOME:        /usr/local/java
+Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
+Tomcat started.
+
+第六步：使用浏览器打开访问安装
+IP地址:8080/jsprun/install.jsp
+然后按照网页指引的安装步骤，点击下一步即可。

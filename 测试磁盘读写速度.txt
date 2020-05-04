@@ -1,0 +1,22 @@
+磁盘读速度：
+root@HA071001:~# dd if=/dev/zero bs=1024 count=1000000 of=/root/1Gb.file
+1000000+0 records in
+1000000+0 records out
+1024000000 bytes (1.0 GB) copied, 3.43076 s, 298 MB/s
+
+磁盘写速度：
+root@HA071001:~# dd if=/root/1Gb.file bs=64k | dd of=/dev/null
+15625+0 records in
+15625+0 records out
+1024000000 bytes (1.0 GB) copied, 2.07398 s, 494 MB/s
+2000000+0 records in
+2000000+0 records out
+1024000000 bytes (1.0 GB) copied, 2.07406 s, 494 MB/s
+
+命令详解：
+if =输入文件（或设备名称）
+of =输出文件（或设备名称）
+/dev/null：回收站、无底洞
+/dev/zero：产生字符
+bs = bytes 同时设置读/写缓冲区的字节数（等于设置ibs和obs）
+count=blocks 只拷贝输入的blocks块

@@ -1,22 +1,22 @@
-¸ü»»°¢ÀïÔ´/163Ô´£º
+æ›´æ¢é˜¿é‡Œæº/163æºï¼š
 
-1¡¢½øÈëyumÔ´ÅäÖÃÎÄ¼ş£¬±¸·İµ±Ç°µÄÔ´
+1ã€è¿›å…¥yumæºé…ç½®æ–‡ä»¶ï¼Œå¤‡ä»½å½“å‰çš„æº
 
 [root@localhost ~]#cd /etc/yum.repos.d
 
-[root@localhost yum.repos.d]# cp /CentOS-Base.repo /CentOS-Base-repo.bak
-2¡¢ÏÂÔØ°¢Àï/163 yumÔ´ÅäÖÃÎÄ¼ş
+[root@localhost yum.repos.d]# cp CentOS-Base.repo CentOS-Base-repo.bak
+2ã€ä¸‹è½½é˜¿é‡Œ/163 yumæºé…ç½®æ–‡ä»¶
 
 [root@localhost yum.repos.d]# wget http://mirrors.aliyun.com/repo/Centos-7.repo
 [root@localhost yum.repos.d]# wget http://mirrors.163.com/.help/CentOS7-Base-163.repo
-3¡¢ÇåÀíÒ»ÏÂ¾É°ü
+3ã€æ¸…ç†ä¸€ä¸‹æ—§åŒ…
 
 [root@localhost yum.repos.d]# yum clean all
 
-4¡¢°ÑÏÂÔØÏÂÀ´ÎÄ¼ş Centos-7.repo/CentOS7-Base-163.repoÉèÖÃ³ÉÎªÄ¬ÈÏÔ´ 
+4ã€æŠŠä¸‹è½½ä¸‹æ¥æ–‡ä»¶ Centos-7.repo/CentOS7-Base-163.repoè®¾ç½®æˆä¸ºé»˜è®¤æº 
 
 [root@localhost yum.repos.d]# mv Centos-7.repo CentOS-Base.repo
 [root@localhost yum.repos.d]# mv CentOS7-Base-163.repo CentOS-Base.repo
-5¡¢Éú³É»º´æ¼´¿ÉÓÃ°¢Àï/163Ô´ÁË
+5ã€ç”Ÿæˆç¼“å­˜å³å¯ç”¨é˜¿é‡Œ/163æºäº†
 
 [root@localhost yum.repos.d]# yum makecache

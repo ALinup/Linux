@@ -1,0 +1,56 @@
+1、查看当前内核版本
+uname -r
+uname -a
+查看系统版本：
+cat /etc/redhat-release
+
+2、升级内核
+更新yum源仓库：
+yum -y update
+启动ELRepo仓库
+导入ELRepo仓库的公共密钥：
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+安装ELRepo仓库的yum源：
+rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
+3、查看可用的系统内核包
+yum --disablerepo="*" --enablerepo="elrepo-kernel" list available
+
+4、安装最新版本内核
+yum --enablerepo=elrepo-kernel install kernel-ml
+
+5、设置grub2
+查看系统上的所有可用内核：
+sudo awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+设置新内核为grub2的默认版本：
+方法1、输入如下命令：
+grub2-set-default 0
+方法2、编辑 /etc/default/grub 文件
+vi /etc/default/grub
+设置 GRUB_DEFAULT=0，通过上面查询显示的编号为 0 的内核作为默认内核
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=0
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="crashkernel=auto rhgb quiet"
+GRUB_DISABLE_RECOVERY="true"
+生成grub配置文件并重启：
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+6、验证
+uname -r
+
+7、删除旧内核（可选）
+查看系统中全部的内核：
+[root@localhost ~]# rpm -qa | grep kernel
+kernel-3.10.0-1062.el7.x86_64
+kernel-tools-libs-3.10.0-1127.8.2.el7.x86_64
+kernel-ml-5.6.13-1.el7.elrepo.x86_64
+kernel-3.10.0-1127.8.2.el7.x86_64
+kernel-tools-3.10.0-1127.8.2.el7.x86_64
+yum remove 删除旧内核的RPM包：
+[root@localhost ~]# yum remove kernel-3.10.0-1062.el7.x86_64 \
+> kernel-tools-libs-3.10.0-1127.8.2.el7.x86_64 \
+> kernel-3.10.0-1127.8.2.el7.x86_64 \
+> kernel-tools-3.10.0-1127.8.2.el7.x86_64

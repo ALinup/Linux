@@ -1,0 +1,2 @@
+dd if=/dev/zero of=文件路径 bs=1M count=5
+生成bs X count大小的文件

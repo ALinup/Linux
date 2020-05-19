@@ -1,0 +1,23 @@
+Linux服务器之间：
+
+yum -y install  epel-release
+yum install iperf  -y
+服务端关闭防火墙
+服务端输入：iperf -s
+客户端输入：iperf -c 服务端ip 
+
+Windows服务器之间：
+
+官网下载iperf1.7压缩包，将压缩包里的文件放到C:\Windows\System32目录下
+然后关闭服务端防火墙，再运行如下命令：
+服务端：iperf -s
+客户端：iperf -c 服务端ip
+
+Linux和Windows服务器之间：
+
+安装完iperf过后，关闭服务端防火墙
+服务器：iperf -s
+客户端：iperf -c 服务端ip
+
+
+

@@ -1,0 +1,31 @@
+163邮箱需要开启IMAP/SMTP
+1、安装mailx
+yum install mailx -y
+
+2、编辑配置文件
+vi /etc/mail.rc
+添加如下内容：
+set from=xxxx@163.com
+set smtp=smtp.163.com
+set smtp-auth-user=xx@163.com
+set smtp-auth-password=授权码
+set smtp-auth=login
+参数说明：
+from：对方收到邮件时显示的发件人
+smtp：指定第三方发邮件的smtp服务器地址
+set smtp-auth-user：第三方发邮件的用户名
+set smtp-auth-password：授权码
+smtp-auth：SMTP的认证方式，默认是login，也可以改成CRAM-MD5或PLAIN方式
+
+3、编写邮件发送脚本
+#!/bin/bash
+CPU=`top -bn 1 -i -c | sed -n '3p' | awk -F ':' '{print$2}' | awk '{print$1}'`
+MEM=`free -m | sed -n '2p' | awk '{printf ("%.1f\n",$3/$2*100)}'`
+IOI=`df -h | grep "/" | head -n 1 | awk '{print$(NF-1)}'`
+echo -e "名称|百分比\nCPU :${CPU}%\n内存:${MEM}%\n磁盘:${IOI}" | mail -s "资源利用率" xxxxx@qq.com
+
+4、运行脚本，检测是否收到邮件
+
+5、设置系统cron计划任务，让脚本每隔半小时运行一次
+vi /etc/crontab
+*/30 * * * * root 脚本路径

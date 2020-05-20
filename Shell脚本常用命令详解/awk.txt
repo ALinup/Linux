@@ -1,0 +1,29 @@
+ 参数说明：
+-F：指定分隔符，可省略（默认空格或Tab位）
+-V：调用外部Shell变量  variable
+
+内置变量：
+FS 保存或设置字段分隔符，如FS=”:”
+
+$n 指定分隔的第n个字段，如$1、$3分别表示第1、第3列
+示例：
+输出第1、7个字段# awk -F: '{print $1","$7}' a.txt
+分隔符用：或/ # awk -F [:/] '{print $1","$7}' a.txt
+输出文件的第1、2列：free |awk  '{print $1,$2}'
+查看root密码：awk -F: '/root/{print $2}' /etc/shadow
+输出第1、3、12字段：uname -a | awk '{print $1,$3,$12}'    
+
+$0 当前读入的整行文本内容
+
+NF 记录当前处理行的字段个数（列数）
+示例：
+输出最后一列$NF：
+#awk '{print “Last:”$NF}' a.txt
+输出倒数第二列：
+#awk '{print “Last:”$（NF-1）}' a.txt
+
+NR 记录当前已读入行的数量（行数）
+示例：
+#awk '{print NR}' a.txt
+
+FNR 当前行在源文件中的行号

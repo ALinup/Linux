@@ -1,0 +1,19 @@
+选项与参数：
+-h：用辨识度较高的单位显示。
+-m/g：用mB或者gB为单位显示。
+
+[root@localhost ~]# free -h
+              total        used        free      shared  buff/cache   available
+Mem:            31G        304M         30G         64M        482M         30G
+Swap:          8.0G          0B        8.0G
+
+total：内存总大小。
+used：使用了多少内存。
+free：除了buff/cache剩余了多少内存。
+shared：共享内存。
+buff/cache：缓冲、缓存区内存数。
+available：真实剩余的可用内存数。
+
+关系：total = used + free + buff/cache
+关系：available 包含 free 和 buff/cache 剩余部分，则是真实剩余内存
+Swap：交换分区的使用情况。如果交换分区使用完了，就要注意是否要加内存，或者内存泄漏了。

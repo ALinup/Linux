@@ -1,0 +1,4 @@
+清除登录日志：
+echo >/var/log/wtmp & echo >/var/log/btmp & echo >/var/log/lastlog & echo >/root/.bash_history & history -c
+查看系统错误日志：
+cat /var/log/messages | grep error

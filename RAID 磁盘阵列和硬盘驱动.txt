@@ -1,0 +1,49 @@
+=========     A.创建raid 分区    =========
+
+1.重启系统>>> F2  >>> Advanced >>> SATA Configuration>>>
+
+ Embeddend SATA controller >>> RAID >>> F 10 保存重启 >>> 按住 Ctrl 和 i ,同时 多次按下；根据提示：有些是A
+
+ （进入raid 页面显示有多个磁盘，创建RAID 类型有：0/1/5/6/10在底部详细介绍）
+
+2. create RAID Volume>>> name (自定义或默认，回车进入下一步) >>> 
+
+RAID Level (raid 0  回车进入下一步)  >>> 
+
+Disks (Select Disks  空格和上下按键选择加入raid模式的硬盘，回车 ) >>> 
+
+Strip Size (128K) >>>  Capacity （默认总大小,回车）>>>
+
+Create Volume (创建完成，Y)>>> 就会看到raid 0 创建完成，重启进入安装系统流程吧！
+
+
+=========  A1.清除 RAID 分区 =========
+
+1.挂载 windows server 2008 镜像
+
+2.在安装界面按下 “shift+F10”调出命令窗口
+
+3.输入 diskpart 
+
+4. 输入 list disk 列出磁盘
+
+5. 输入 select disk 0 选择0号盘
+
+6 输入 clean 清除磁盘
+
+
+=========     B.先进入系统安装界面再，挂载磁盘驱动     ==========
+
+1.先挂载 windos 系统镜像进入安装系统分区磁盘界面显示无盘
+
+2.取消挂载原有的windos系统镜像，挂载新的磁盘驱动镜像：
+
+E:\dirver\E5_dirvers.iso
+
+挂载之后
+
+3.加载磁盘镜像：浏览>>>CD 驱动器 >>> Drivers >>> X64 >>> 
+
+win 7_2K8 >>> AHCI >>> 确定 >>> 下一步   (自动安装)
+
+4. raid 0 磁盘驱动已经安装成功，显示出了磁盘。再取消挂载的磁盘驱动，换成windos 系统镜像。开始raid 磁盘模式下的安装之旅吧

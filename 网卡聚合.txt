@@ -1,0 +1,11 @@
+网卡聚合：
+网卡eno1和eno2聚合到网卡eth0上：
+nmcli connection add type bond ifname eth0 mode 1
+nmcli connection add type bond-slave ifname eno1 master eth0
+nmcli connection add type bond-slave ifname eno2 master eth0
+网卡eno3和eno4聚合到网卡eth1上：
+nmcli connection add type bond ifname eth1 mode 1
+nmcli connection add type bond-slave ifname eno3 master eth1
+nmcli connection add type bond-slave ifname en04 master eth1
+查看配置的聚合网卡：nmcli con sh
+移除聚合：nmcli con delete  slave-eno1

@@ -1,0 +1,16 @@
+zip:
+打包：
+将当前目录下的PocTest文件夹打包成PocTest.zip:
+zip -q -r  PocTest.zip  PocTest/
+解包：
+unzip PocTest.zip
+
+tar:
+打包（.tar.gz后缀）：
+tar -cvzf firefox-3.0.3.tar.gz firefox       #将firefox文件夹打包为firefox-3.0.3.tar.gz
+解包（.tar.gz后缀）：
+tar -xvzf firefox-3.0.3.tar.gz
+打包（.tar.bz2后缀）
+tar -cvjf firefox-3.0.3.tar.bz2  firefox/    #将firefox文件夹打包为firefox-3.0.3.tar.bz2
+解包（.tar.bz2后缀）
+tar -xvjf firefox-3.0.3.tar.bz2

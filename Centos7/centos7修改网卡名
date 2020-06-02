@@ -1,0 +1,26 @@
+1.首先进入网卡配置文件，先把文件里的名称改掉
+
+#vi /etc/sysconfig/network-scripts/ifcfg-em1
+
+NAME=eth0
+DEVICE=eth0
+
+2.保存退出，再修改这个网卡配置文件的文件名
+
+#cd /etc/sysconfig/network-scripts/
+
+#mv ifcfg-em1 ifcfg-eth0
+
+3.修改grub配置文件，把net.ifnames=0 biosdevname=0参数 加入指定位置
+
+#vi /etc/default/grub
+
+GRUB_CMDLINE_LINUX 中加上 net.ifnames=0 biosdevname=0
+
+4.运行命令grub2-mkconfig -o /boot/grub2/grub.cfg 来重新生成GRUB配置并更新内核参数
+
+#grub2-mkconfig -o /boot/grub2/grub.cfg
+
+5.重启
+
+#reboot

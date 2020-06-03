@@ -86,7 +86,7 @@ Writing superblocks and filesystem accounting information: done
 [root@localhost ~]# mkdir /data   //创建挂载目录data（可自定义）
 [root@localhost ~]# mount /dev/sdb1 /data/   //将新分区sdb1挂载到data目录下
 [root@localhost ~]# cd /data
-[root@localhost data]# ls   //查看到lost+found 表示挂载成功
+[root@localhost data]# ls   //查看到lost+found 表示挂载成功（xfs没有此显示）
 lost+found
 [root@localhost data]# df -h
 Filesystem      Size  Used Avail Use% Mounted on

@@ -1,0 +1,13 @@
+# screen //创建 screen 终端
+
+# screen vi /home/file //创建 screen 终端 ，并执行 vi命令
+
+离开 screen 终端:ctrl+d
+
+# screen -ls  //显示已创建的screen终端 
+There are screens on:
+	17631.pts-0.localhost	(Detached)
+	17598.pts-0.localhost	(Detached)
+2 Sockets in /var/run/screen/S-root.
+
+# screen -r 17631 //连接 screen_id 为 17631 的 screen终端

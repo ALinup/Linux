@@ -3,3 +3,9 @@
 
 [root@localhost ~]# scp /root/1 192.168.145.133:/root/3
 传输文件到192.168.145.133主机的/root目录下，并更名为3
+
+[root@localhost folder]# scp -r /home/folder/ 192.168.145.132:/root/
+传输本地本地夹文件到192.168.145.132主机的/root下
+
+[root@localhost folder]# scp -r 192.168.145.132:/root/folder/ /root/
+将远程主机192.168.145.132中的/root/folder文件夹传输到本地的/root下

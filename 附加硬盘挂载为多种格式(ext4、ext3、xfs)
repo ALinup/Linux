@@ -101,7 +101,7 @@ tmpfs            98M     0   98M   0% /run/user/0
 
 5、写入硬盘启动信息
 磁盘挂载后重启服务器挂载就会失效，因此我们需要写入硬盘启动信息，下次重启后自动挂载数据盘。
-[root@localhost data]# echo "/dev/sdb1          /data          ext4           defaults  0 0" >>/etc/fstab
+[root@localhost data]# echo "/dev/sdb1 /data ext4 defaults 0 0" >> /etc/fstab
 [root@localhost data]# cat /etc/fstab
 
 #
@@ -114,4 +114,4 @@ tmpfs            98M     0   98M   0% /run/user/0
 UUID=6db12e5c-b295-46b9-a4bb-db8993ff92a2 /                       xfs     defaults        0 0
 UUID=ab2920d8-4334-4dd9-91db-989cc2e090f3 /boot                   xfs     defaults        0 0
 UUID=c106a1ad-fec0-4cfd-81c8-78e09ee230b9 swap                    swap    defaults        0 0
-/dev/sdb1          /data          ext4           defaults  0 0   //写入成功
+/dev/sdb1 /data ext4 defaults 0 0   //写入成功

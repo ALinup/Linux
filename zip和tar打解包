@@ -17,3 +17,10 @@ tar -xvzf firefox-3.0.3.tar.gz
 tar -cvjf firefox-3.0.3.tar.bz2  firefox/    #将firefox文件夹打包为firefox-3.0.3.tar.bz2
 解包（.tar.bz2后缀）
 tar -xvjf firefox-3.0.3.tar.bz2
+参数详解：
+-c 建立新的压缩文件
+-x 从压缩的文件中提取文件
+-z 支持gzip解压文件
+-j 支持bzip2解压文件
+-v 显示操作过程
+-f 指定压缩文件

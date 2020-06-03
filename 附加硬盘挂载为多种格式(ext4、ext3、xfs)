@@ -59,7 +59,7 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 
 3、格式化新建的分区
-[root@localhost ~]# mkfs.ext4 /dev/sdb1
+[root@localhost ~]# mkfs.ext4 /dev/sdb1   //可自主决定选用其它文件格式，如ext3、xfs等
 mke2fs 1.42.9 (28-Dec-2013)
 Filesystem label=
 OS type: Linux

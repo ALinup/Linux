@@ -1,76 +1,79 @@
 centos6:
-²é¿´·À»ğÇ½×´Ì¬£º
+æŸ¥çœ‹é˜²ç«å¢™çŠ¶æ€ï¼š
 service iptables status
-Í£Ö¹·À»ğÇ½£º
+åœæ­¢é˜²ç«å¢™ï¼š
 service iptables stop
-Æô¶¯·À»ğÇ½£º
+å¯åŠ¨é˜²ç«å¢™ï¼š
 service iptables start
-ÖØÆô·À»ğÇ½£º
+é‡å¯é˜²ç«å¢™ï¼š
 service iptables restart
-ÓÀ¾Ã¹Ø±Õ·À»ğÇ½£º
+æ°¸ä¹…å…³é—­é˜²ç«å¢™ï¼š
 chkconfig iptables off
-ÓÀ¾Ã¹Ø±ÕºóÖØÆô£º
+æ°¸ä¹…å…³é—­åé‡å¯ï¼š
 chkconfig iptables on
-¿ªÆô¶Ë¿Ú
+å¼€å¯ç«¯å£
 vim /etc/sysconfig/iptables
-¼ÓÈëÒÔÏÂ´úÂë£º
--A INPUT -m state --state NEW -m tcp -p tcp --dport ¶Ë¿ÚºÅ -j ACCEPT
-±£´æÍË³öºóÖØÆô·À»ğÇ½£º
+åŠ å…¥ä»¥ä¸‹ä»£ç ï¼š
+-A INPUT -m state --state NEW -m tcp -p tcp --dport ç«¯å£å· -j ACCEPT
+ä¿å­˜é€€å‡ºåé‡å¯é˜²ç«å¢™ï¼š
 service iptables restart
-·âµ¥¸öIP£º
-iptables -I INPUT -s ipµØÖ· -j DROP
-·âIP¶Î£º
-iptables -I INPUT -s ipµØÖ·/16 -j DROP
+å°å•ä¸ªIPï¼š
+iptables -I INPUT -s ipåœ°å€ -j DROP
+å°IPæ®µï¼š
+iptables -I INPUT -s ipåœ°å€/16 -j DROP
 
 centos7:
-²é¿´firewall·şÎñ×´Ì¬£º
+æŸ¥çœ‹firewallæœåŠ¡çŠ¶æ€ï¼š
 systemctl status firewalld
-²é¿´firewallµÄ×´Ì¬£º
+æŸ¥çœ‹firewallçš„çŠ¶æ€ï¼š
 firewall-cmd --state
-¿ªÆôfirewalld.service·şÎñ
+å¼€å¯firewalld.serviceæœåŠ¡
+systemctl start firewalldï¼ˆæ¨èï¼‰
 service firewalld start
-ÖØÆôfirewalld.service·şÎñ
+é‡å¯firewalld.serviceæœåŠ¡
+systemctl restart firewalldï¼ˆæ¨èï¼‰
 service firewalld restart
-¹Ø±Õfirewalld.service·şÎñ
+å…³é—­firewalld.serviceæœåŠ¡
+systemctl stop firewalldï¼ˆæ¨èï¼‰
 service firewalld stop
-²é¿´·À»ğÇ½¹æÔò£º
+æŸ¥çœ‹é˜²ç«å¢™è§„åˆ™ï¼š
 firewall-cmd --list-all
-²éÑ¯¶Ë¿ÚÊÇ·ñ¿ª·Å£º
-firewall-cmd --query-port=¶Ë¿ÚºÅ/tcp
-¿ª·Å¶Ë¿Ú£º
-firewall-cmd --permanent --add-port=¶Ë¿ÚºÅ/tcp
-ÒÆ³ı¶Ë¿Ú£º
-firewall-cmd --permanent --remove-port=¶Ë¿ÚºÅ/tcp
-ÖØÆô·À»ğÇ½£¨ĞŞ¸ÄÅäÖÃºóÒªÖØÆô·À»ğÇ½£©£º
+æŸ¥è¯¢ç«¯å£æ˜¯å¦å¼€æ”¾ï¼š
+firewall-cmd --query-port=ç«¯å£å·/tcp
+å¼€æ”¾ç«¯å£ï¼š
+firewall-cmd --permanent --add-port=ç«¯å£å·/tcp
+ç§»é™¤ç«¯å£ï¼š
+firewall-cmd --permanent --remove-port=ç«¯å£å·/tcp
+é‡å¯é˜²ç«å¢™ï¼ˆä¿®æ”¹é…ç½®åè¦é‡å¯é˜²ç«å¢™ï¼‰ï¼š
 firewall-cmd --reload
-²ÎÊı½âÊÍ£º
-firewall-cmd:ÊÇLinuxÌá¹©µÄ²Ù×÷firewallµÄÒ»¸ö¹¤¾ß£»
---permanent:±íÊ¾ÉèÖÃÎª³Ö¾Ã£»
---add-port:±ê¼ÇÌí¼ÓµÄ¶Ë¿Ú¡£
-Ìí¼ÓÄ³¸öIPµ½ºÚÃûµ¥£º
+å‚æ•°è§£é‡Šï¼š
+firewall-cmd:æ˜¯Linuxæä¾›çš„æ“ä½œfirewallçš„ä¸€ä¸ªå·¥å…·ï¼›
+--permanent:è¡¨ç¤ºè®¾ç½®ä¸ºæŒä¹…ï¼›
+--add-port:æ ‡è®°æ·»åŠ çš„ç«¯å£ã€‚
+æ·»åŠ æŸä¸ªIPåˆ°é»‘åå•ï¼š
 vim /etc/hosts.deny
-Ìí¼ÓÈçÏÂĞÅÏ¢£º
-sshd:ipµØÖ·:deny
-Ìí¼ÓÄ³¸öIPµ½°×Ãûµ¥£º
+æ·»åŠ å¦‚ä¸‹ä¿¡æ¯ï¼š
+sshd:ipåœ°å€:deny
+æ·»åŠ æŸä¸ªIPåˆ°ç™½åå•ï¼š
 vim /etc/hosts.allow
-sshd:ipµØÖ·:allow
+sshd:ipåœ°å€:allow
 
 ubuntu:
-²é¿´·À»ğÇ½µ±Ç°×´Ì¬£º
+æŸ¥çœ‹é˜²ç«å¢™å½“å‰çŠ¶æ€ï¼š
 ufw status
-¿ªÆô·À»ğÇ½£º
+å¼€å¯é˜²ç«å¢™ï¼š
 ufw enable
-¹Ø±Õ·À»ğÇ½£º
+å…³é—­é˜²ç«å¢™ï¼š
 ufw disable
-²é¿´·À»ğÇ½°æ±¾£º
+æŸ¥çœ‹é˜²ç«å¢™ç‰ˆæœ¬ï¼š
 ufw version
-Ä¬ÈÏÔÊĞíÍâ²¿·ÃÎÊ±¾»ú£º
+é»˜è®¤å…è®¸å¤–éƒ¨è®¿é—®æœ¬æœºï¼š
 ufw default allow
-Ä¬ÈÏ¾Ü¾øÍâ²¿·ÃÎÊ±¾»ú£º
+é»˜è®¤æ‹’ç»å¤–éƒ¨è®¿é—®æœ¬æœºï¼š
 ufw default deny
-ÔÊĞíÍâ²¿·ÃÎÊÄ³¶Ë¿Ú£º
-ufw allow ¶Ë¿ÚºÅ
-¾Ü¾øÍâ²¿·ÃÎÊÄ³¶Ë¿Ú£º
-ufw deny ¶Ë¿ÚºÅ
-ÔÊĞíÄ³¸öIPµØÖ··ÃÎÊ±¾»úËùÓĞ¶Ë¿Ú£º
-ufw allow from IPµØÖ·
+å…è®¸å¤–éƒ¨è®¿é—®æŸç«¯å£ï¼š
+ufw allow ç«¯å£å·
+æ‹’ç»å¤–éƒ¨è®¿é—®æŸç«¯å£ï¼š
+ufw deny ç«¯å£å·
+å…è®¸æŸä¸ªIPåœ°å€è®¿é—®æœ¬æœºæ‰€æœ‰ç«¯å£ï¼š
+ufw allow from IPåœ°å€

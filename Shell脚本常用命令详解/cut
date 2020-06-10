@@ -1,0 +1,73 @@
+参数说明：
+-b：按字节筛选；
+-n：与"-b"选项连用，表示禁止将字节分割开来操作；
+-c：按字符筛选；
+-f：按字段筛选；
+-d：指定字段分隔符，不写-d时的默认字段分隔符为"TAB"；因此只能和"-f"选项一起使用。
+-s：避免打印不包含分隔符的行；
+--complement：补足被选择的字节、字符或字段（反向选择的意思或者说是补集）；
+--output-delimiter：指定输出分割符；默认为输入分隔符。
+
+示例：
+[root@localhost ~]# vi 1.sh
+NO Name SubjectID Mark 备注
+1  longshuai 001  56 不及格
+2  gaoxiaofang  001 60 及格
+3  zhangsan 001 50 不及格
+4  lisi    001   80 及格
+5  wangwu   001   90 及格
+djakldj;lajd;sla
+#使用tr工具来压缩连续字符
+[root@localhost ~]# cat 1.sh | tr -s " " | cut -d " " -f2,4 -s
+Name Mark
+longshuai 56
+gaoxiaofang 60
+zhangsan 50
+lisi 80
+wangwu 90
+#输出除了第2字段和第4字段其余的所有字段。
+[root@localhost ~]# cat 1.sh | tr -s " " | cut -d" " -f2,4 -s --complement
+NO SubjectID 备注
+1 001 不及格
+2 001 及格
+3 001 不及格
+4 001 及格
+5 001 及格
+#输出第三字段和后面所有的内容
+[root@localhost ~]# cut -d" " -f3- 1.sh -s
+SubjectID Mark 备注
+longshuai 001  56 不及格
+gaoxiaofang  001 60 及格
+zhangsan 001 50 不及格
+lisi    001   80 及格
+wangwu   001   90 及格
+#范围交叉时，不会重复输出。比如-f3-5,4-6，则输出-f3-6。
+[root@localhost ~]# cut -d" " -f3-5,4-6 1.sh -s
+SubjectID Mark 备注
+longshuai 001  56
+gaoxiaofang  001 60
+zhangsan 001 50 不及格
+lisi   
+wangwu   001
+[root@localhost ~]# cut -d" " -f3-6 1.sh -s
+SubjectID Mark 备注
+longshuai 001  56
+gaoxiaofang  001 60
+zhangsan 001 50 不及格
+lisi   
+wangwu   001
+#如果范围顺序无序，则Linux会先对范围排序（升序）再输出。例如-f4-6,2等价于-f2,4-6。
+[root@localhost ~]# cut -d" " -f4-6,2 1.sh -s
+Name Mark 备注
+ 001  56
+  001 60
+ 001 50 不及格
+   
+   001
+[root@localhost ~]# cut -d" " -f2,4-6 1.sh -s
+Name Mark 备注
+ 001  56
+  001 60
+ 001 50 不及格
+   
+   001

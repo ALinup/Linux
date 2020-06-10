@@ -69,7 +69,7 @@ a:bc:de
 [root@localhost scripts]# var=5
 [root@localhost scripts]# read -t 3 var
 [root@localhost scripts]# echo $var
-#超时输出为空
+#指定时间内未按回车输出为空
 [root@localhost scripts]# read -t 3 var
 1
 [root@localhost scripts]# echo $var

@@ -1,0 +1,76 @@
+选项说明：
+-a：将分裂后的字段依次存储到指定的数组中，存储的起始位置从数组的index=0开始。
+-d：指定读取行的结束符号。默认结束符号为换行符。
+-n：限制读取N个字符就自动结束读取，如果没有读满N个字符就按下回车或遇到换行符，则也会结束读取。
+-N：严格要求读满N个字符才自动结束读取，即使中途按下了回车或遇到了换行符也不结束。其中换行符或回车算一个字符。
+-p：给出提示符。默认不支持"\n"换行，要换行需要特殊处理，见下文示例。例如，"-p 请输入密码："
+-r：禁止反斜线的转义功能。这意味着"\"会变成文本的一部分。
+-s：静默模式。输入的内容不会回显在屏幕上。
+-t：给出超时时间，在达到超时时间时，read退出并返回错误。也就是说不会读取任何内容，即使已经输入了一部分。
+-u：从给定文件描述符(fd=N)中读取数据。
+
+基本用法示例：
+(1).将读取的内容分配给数组变量，从索引号0开始分配。
+[root@localhost scripts]# read -a array
+what is your name?
+[root@localhost scripts]# echo ${array[@]}
+what is your name?
+[root@localhost scripts]# echo ${array[0]}
+what
+(2).指定读取行的结束符号，而不再使用换行符。
+[root@localhost scripts]# read -d '/'
+hello/     #输入完尾部的"/"，自动结束read
+由于没有指定var_name，所以通过$REPLY变量查看read读取的行。
+[root@localhost scripts]# echo $REPLY
+hello
+(3).限制输入字符。
+[root@localhost scripts]# read -n 5
+12345
+[root@localhost scripts]# echo $REPLY     # 输入12345共5个字符
+12345
+如果输入的字符数小于5，按下回车会立即结束读取。
+[root@localhost scripts]# read -n 5
+123
+[root@localhost scripts]# echo $REPLY
+123
+但如果使用的是"-N 5"而不是"-n 5"，则严格限制读满5个字符才结束读取。
+[root@localhost scripts]# read -N 5
+123
+4
+[root@localhost scripts]# echo $REPLY
+123 4
+(4).使用-p选项给出输入提示。
+[root@localhost scripts]# read -p "pls enter your name:"
+pls enter your name:dachangjin
+[root@localhost scripts]# echo $REPLY
+dachangjin
+"-p"选项默认不带换行功能，且也不支持"\n"换行。但通过$'string'的方式特殊处理，就可以实现换行的功能。例如：
+[root@localhost scripts]# read  -p $'enter your name:\n'     #注意字符串两边是单引号
+enter your name:
+dachangjin
+[root@localhost scripts]# echo $REPLY
+dachangjin
+(5).禁止反斜线转义功能。
+[root@localhost scripts]# read -r
+what is your name \?
+[root@localhost scripts]# echo $REPLY
+what is your name \?
+(6).不回显输入的字符。比如输入密码的时候，不回显输入密码。
+[root@localhost scripts]# read -s -p "please enter your password:"
+please enter your password:
+[root@localhost scripts]# echo $REPLY
+123456
+(7).将读取的行分割后赋值给变量。
+[root@localhost scripts]# read var1 var2 var3
+a bc de
+[root@localhost scripts]# echo $var1:$var2:$var3
+a:bc:de
+(8).给出输入时间限制。没完成的输入将被丢弃，所以变量将赋值为空(如果在执行read前，变量已被赋值，则此变量在read超时后将被覆盖为空)。
+[root@localhost scripts]# var=5
+[root@localhost scripts]# read -t 3 var
+[root@localhost scripts]# echo $var
+#超时输出为空
+[root@localhost scripts]# read -t 3 var
+1
+[root@localhost scripts]# echo $var
+1

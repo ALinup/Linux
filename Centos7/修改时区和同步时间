@@ -7,3 +7,5 @@ Thu, 11 Jun 2020 10:29:45 +0800   #+0800代表东八区
 [root@localhost ~]# hwclock --systohc --localtime   #同步硬件时间
 #永久生效
 [root@localhost ~]# hwclock -w
+#开启ntpdate服务
+[root@localhost ~]# systemctl start ntpdate

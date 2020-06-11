@@ -1,3 +1,14 @@
+第一种：
+#按每个文件100行进行分割
+[root@localhost 4]# split -l 100 /root/1.log log
+[root@localhost 4]# ls
+logaa  logab  logac  logad  logae  logaf  logag  logah  logai  logaj  logak  logal
+#按每个文件20K来分割（单位可以是M和G）
+[root@localhost 7]# split -b 20K /root/2.log log
+[root@localhost 7]# ls
+logaa  logab  logac  logad  logae  logaf  logag  logah  logai
+
+第二种：
 默认centos安装了logrotate,如果没有，安装命令如下：
 yum -y install logrotate crontabs
 软件包信息说明：

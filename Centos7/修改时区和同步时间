@@ -1,4 +1,4 @@
-[root@localhost ~]# timedatectl set-timezone Asia/Shanghai
+[root@localhost ~]# timedatectl set-timezone Asia/Shanghai   #设置时区为东八区
 [root@localhost ~]# date -R
 Thu, 11 Jun 2020 10:29:45 +0800   #+0800代表东八区
 [root@localhost ~]# yum install ntpdate

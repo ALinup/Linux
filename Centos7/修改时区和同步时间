@@ -1,0 +1,9 @@
+[root@localhost ~]# timedatectl set-timezone Asia/Shanghai
+[root@localhost ~]# date -R
+Thu, 11 Jun 2020 10:29:45 +0800   #+0800代表东八区
+[root@localhost ~]# yum install ntpdate
+[root@localhost ~]# ntpdate ntp1.aliyun.com   #同步时间用阿里云服务器
+[root@localhost ~]# hwclock   #查看硬件时间
+[root@localhost ~]# hwclock --systohc --localtime   #同步硬件时间
+#永久生效
+[root@localhost ~]# hwclock -w

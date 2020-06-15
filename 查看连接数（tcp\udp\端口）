@@ -1,0 +1,8 @@
+[root@localhost ~]# netstat -an |grep 'ESTABLISHED' |grep 'tcp' |wc -l
+13
+
+[root@localhost ~]# netstat -an |grep 'ESTABLISHED' |grep '8888' |wc -l
+6
+
+[root@localhost ~]# netstat -an |grep 'ESTABLISHED' |grep 'udp' |wc -l
+0

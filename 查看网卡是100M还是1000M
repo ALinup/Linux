@@ -1,0 +1,4 @@
+ethtool 网卡名
+
+参数解释：
+Speed表示网卡带宽，Duplex表示工作模式，Supported link modes表示支持的工作模式。

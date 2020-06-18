@@ -3,19 +3,19 @@ nano /etc/network/interfaces
 配置多IP：
 auto eth0  
 iface eth0 inet static
-address 
+address IP地址
 netmask 255.255.255.0
-gateway 
+gateway 网关
 dns-nameserver DNS服务
         
 auto eth0:0  
 iface eth0:0 inet static  
-address   
+address IP地址
 netmask 255.255.255.0
 
 auto eth0:1 
 iface eth0:1 inet static  
-address   
+address IP地址
 netmask 255.255.255.0
 
 按Ctrl+x退出，然后按Y

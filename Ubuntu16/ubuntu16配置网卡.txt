@@ -1,4 +1,23 @@
 nano /etc/network/interfaces
-°´Ctrl+xÍË³ö£¬È»ºó°´Y
+#vi /etc/network/interfaces
+é…ç½®å¤šIPï¼š
+auto eth0  
+iface eth0 inet static
+address 
+netmask 255.255.255.0
+gateway 
+dns-nameserver DNSæœåŠ¡
+        
+auto eth0:0  
+iface eth0:0 inet static  
+address   
+netmask 255.255.255.0
+
+auto eth0:1 
+iface eth0:1 inet static  
+address   
+netmask 255.255.255.0
+
+æŒ‰Ctrl+xé€€å‡ºï¼Œç„¶åæŒ‰Y
 /etc/init.d/networking restart
-ÖØÆôÉúĞ§
+é‡å¯ç”Ÿæ•ˆ

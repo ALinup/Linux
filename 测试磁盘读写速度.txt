@@ -20,3 +20,5 @@ of =输出文件（或设备名称）
 /dev/zero：产生字符
 bs = bytes 同时设置读/写缓冲区的字节数（等于设置ibs和obs）
 count=blocks 只拷贝输入的blocks块
+
+hdparm -Tt /dev/sda

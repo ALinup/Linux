@@ -8,3 +8,13 @@
 –report ：结果显示，并不动态显示
 
 示例：
+![image](https://github.com/ALinup/picture/blob/master/p1/QQ%E6%88%AA%E5%9B%BE20200702162700.jpg)
+
+输出参数的解释：
+Loss% – 丢包率，单位是”%”;
+Snt – sent包的数量
+Last – 最后一个包的延时
+Avg – 所有包的平均延时
+Best – 延时最小的包
+Wrst – 延时最大的包
+StDev – 标准偏差

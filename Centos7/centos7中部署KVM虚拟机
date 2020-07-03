@@ -1,0 +1,46 @@
+1、centos7系统要求
+内存4G以上
+处理器需打开虚拟化功能
+添加独立磁盘供KVM虚拟机使用
+
+2、格式化独立磁盘
+fdisk /dev/sdb
+mkfs -t xfs /dev/sdb1
+mkdir /vdir
+mount /dev/sdb1 /vdir
+df -Th
+
+3、安装KVM相关环境包
+yum install qemu-kvm qemu-kvm-tools virt-manager libvirt virt-install -y
+qemu-kvm 虚拟化软件
+virsh virt-manager virt-viewer virt-install other-tools是libvirt用户态的工具
+
+4、创建虚拟机的域空间
+注：此处文件需要创建到专门供虚拟机使用的挂载目录下（/vdir目录下）
+qemu-img create -f raw -o size=20G c7-1.img   //文件格式可以是img,也可以是raw
+lsmod | grep kvm //检查KVM模块是否安装
+
+5、将需要安装的系统镜像放入本地，供安装时使用
+cp CentOS-7-x86_64-Minimal-1908.iso /opt/
+#查看服务启动状态
+systemctl status libvirtd.service
+
+6、执行虚拟机安装
+virt-install --name c7-1 \   //指定虚拟机名称
+--virt-type kvm \   //指定安装类型
+--ram 2048 \   //指定虚拟机内存
+--cdrom=/opt/CentOS-7-x86_64-Minimal-1908.iso \   //系统镜像在本地位置
+--disk path=/vdir/c7-1.img \   //注意，前面创建的是img格式这里就是img，raw这里就是raw，需要对应上
+--network network=default \
+--graphics vnc,listen=0.0.0.0 \   //远程访问，任何主机都可以
+--noautoconsole
+
+7、使用VNC远程连接
+Windows上安装TightVNC
+为了避免宿主机网卡与虚拟机网卡冲突，在安装虚拟机时需要修改虚拟机网卡。
+选择安装系统时，按下TAB键，修改内核参数，要改网卡名称为eth0
+在后面追加net.ifnames=0 biosdevname=0
+
+
+
+8、

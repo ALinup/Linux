@@ -41,6 +41,10 @@ Windows上安装TightVNC
 选择安装系统时，按下TAB键，修改内核参数，要改网卡名称为eth0
 在后面追加net.ifnames=0 biosdevname=0
 
-
-
-8、
+8、查看与开关机操作
+virsh shutdown c7-1 //关闭虚拟机
+virsh start c7-1 //启动虚拟机
+virsh list --all //查看虚拟机状态
+#删除虚拟机
+virsh shutdown c7-1 //先关闭
+virsh undefine c7-1 //再删除

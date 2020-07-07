@@ -1,6 +1,8 @@
 centos6:
 查看防火墙状态：
 service iptables status
+保存防火墙规则:
+service iptables save
 停止防火墙：
 service iptables stop
 启动防火墙：
@@ -19,33 +21,59 @@ vim /etc/sysconfig/iptables
 service iptables restart
 封单个IP：
 iptables -I INPUT -s ip地址 -j DROP
+解封单个IP：
+iptables -I INPUT -s ip地址 -j ACCEPT
 封IP段：
 iptables -I INPUT -s ip地址/16 -j DROP
+解封IP段：
+iptables -I INPUT -s ip地址/16 -j ACCEPT
+禁止所有IP访问某个端口：
+iptables -I INPUT -p tcp --dport 端口号 -j DROP
+只允许某个IP访问某个端口：
+iptables -I INPUT -s IP地址 -p tcp --dport 端口号 -j ACCEPT
+允许某个网段访问某个端口：
+iptables -I INPUT -s 192.168.200.0/24 -p tcp --dport 80 -j ACCEPT
 
 centos7:
 查看firewall服务状态：
 systemctl status firewalld
 查看firewall的状态：
 firewall-cmd --state
-开启firewalld.service服务
+开启firewall服务
 systemctl start firewalld（推荐）
-service firewalld start
-重启firewalld.service服务
-systemctl restart firewalld（推荐）
-service firewalld restart
-关闭firewalld.service服务
-systemctl stop firewalld（推荐）
-service firewalld stop
+重启firewall服务
+systemctl restart firewalld
+关闭firewall服务
+systemctl stop firewalld
 查看防火墙规则：
 firewall-cmd --list-all
 查询端口是否开放：
 firewall-cmd --query-port=端口号/tcp
-开放端口：
-firewall-cmd --permanent --add-port=端口号/tcp
+开放单个端口：
+firewall-cmd --zone=public --add-port=端口号/tcp --permanent
+开放端口段：
+firewall-cmd --zone=public --add-port=100-500/tcp --permanent
 移除端口：
-firewall-cmd --permanent --remove-port=端口号/tcp
-重启防火墙（修改配置后要重启防火墙）：
+firewall-cmd --zone=public --remove-port=端口号/tcp --permanent
+firewall-cmd --zone=public --remove-port=100-500/tcp --permanent
+重启防火墙规则（修改配置后要重启防火墙）：
 firewall-cmd --reload
+查看是否生效：
+firewall-cmd --zone=public --query-port=端口号/tcp
+查看系统开放的所有端口：
+firewall-cmd --zone=public --list-ports
+禁止某个IP访问某个端口：
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="IP地址" port protocol="tcp" port="端口号" reject"
+解除IP地址限制：
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="IP地址" port protocol="tcp" port="端口号" accept"
+限制IP段：
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.0.0/24" port protocol="tcp" port="80" reject"
+解除限制：
+firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="10.0.0.0/24" port protocol="tcp" port="80" accept"
+查看已经设置的规则：
+firewall-cmd --zone=public --list-rich-rules
+防火墙配置文件：
+/etc/firewalld/zones/public.xml
 参数解释：
 firewall-cmd:是Linux提供的操作firewall的一个工具；
 --permanent:表示设置为持久；

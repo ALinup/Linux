@@ -1,8 +1,9 @@
 修改ssh端口号:
 centos6:
 (1)vi /etc/ssh/sshd_config，增加端口号
-(2)开放端口:-A INPUT -p tcp -m state --state NEW -m tcp --dport 端口号 -j ACCEPT
-防火墙配置文件位置:/etc/sysconfig/iptables
+(2)开放端口:
+编辑防火墙配置文件位置:/etc/sysconfig/iptables
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 端口号 -j ACCEPT
 (3)防火墙重启，使配置生效:
 service iptables restart
 (4)重启ssh服务:service sshd restart

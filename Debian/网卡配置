@@ -14,3 +14,11 @@ iface enp3s0:1 inet static
 启动新的IP:
 ifup enp3s0:0
 ifup enp3s0:1
+
+ifconfig eth0 [up|down]
+[ifup|ifdown] eth0
+service network [restart|start|stop]
+区别：
+ifconfig 是一个命令，来控制对应网卡（单个）是否启用。
+ifup 是一个脚本，它会根据网络接口配置来判断是使用 ifconfig 读取配置文件配置网络 IP，还是调用 dhcp 客户端去从服务器获取 IP，ifup会作更多的检测。
+service network操作的是所有的网卡，而且service命令只允许root使用，而普通用户在特定情况下仍可以使用ifconfig。

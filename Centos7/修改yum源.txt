@@ -13,7 +13,7 @@
 
 [root@localhost yum.repos.d]# yum clean all
 
-4、把下载下来文件 Centos-7.repo/CentOS7-Base-163.repo设置成为默认源 
+4、将下载下来的文件 Centos-7.repo/CentOS7-Base-163.repo设置成为默认源 
 
 [root@localhost yum.repos.d]# mv Centos-7.repo CentOS-Base.repo
 [root@localhost yum.repos.d]# mv CentOS7-Base-163.repo CentOS-Base.repo

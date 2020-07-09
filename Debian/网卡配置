@@ -1,0 +1,16 @@
+在主网卡enp3s0后面添加：
+auto enp3s0:0
+allow-hotplug enp3s0:0
+iface enp3s0:0 inet static
+    address 192.168.1.90
+    netmask 255.255.255.0
+
+auto enp3s0:1
+allow-hotplug enp3s0:1
+iface enp3s0:1 inet static
+    address 192.168.1.91
+    netmask 255.255.255.0
+
+启动新的IP:
+ifup enp3s0:0
+ifup enp3s0:1

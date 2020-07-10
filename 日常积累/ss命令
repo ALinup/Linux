@@ -1,0 +1,140 @@
+ss是Socket Statistics的缩写。顾名思义，ss命令可以用来获取socket统计信息，它可以显示和netstat类似的内容。ss的优势在于它能够显示更多更详细的有关TCP和连接状态的信息，而且比netstat更快速更高效。
+当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢。
+ss快的秘诀在于，它利用到了TCP协议栈中tcp_diag。tcp_diag是一个用于分析统计的模块，可以获得Linux 内核中第一手的信息，这就确保了ss的快捷高效。
+
+常用选项：
+-h, --help 帮助
+-V, --version  显示版本号
+-t, --tcp 显示 TCP 协议的 sockets
+-u, --udp 显示 UDP 协议的 sockets
+-x, --unix 显示 unix domain sockets，与 -f 选项相同
+-n, --numeric 不解析服务的名称，如 "22" 端口不会显示成 "ssh"
+-l, --listening 只显示处于监听状态的端口
+-p, --processes 显示监听端口的进程(Ubuntu 上需要 sudo)
+-a, --all 对 TCP 协议来说，既包含监听的端口，也包含建立的连接
+-r, --resolve 把 IP 解释为域名，把端口号解释为协议名称
+
+常见用例：
+如果不添加选项 ss 命令默认输出所有建立的连接(不包含监听的端口)，包括 tcp, udp, and unix socket 三种类型的连接：
+[root@node1 ~]# ss |head -n 5
+Netid  State      Recv-Q Send-Q Local Address:Port                 Peer Address:Port                
+u_str  ESTAB      0      0       * 36823                 * 36824                
+u_str  ESTAB      0      0       * 36793                 * 36794                
+u_str  ESTAB      0      0       * 36824                 * 36823                
+u_str  ESTAB      0      0      /run/dbus/system_bus_socket 34128                 * 33254 
+查看主机监听的端口：
+[root@node1 ~]# ss -tnl
+State      Recv-Q Send-Q         Local Address:Port                        Peer Address:Port              
+LISTEN     0      128                        *:22                                     *:*                  
+LISTEN     0      100                127.0.0.1:25                                     *:*                  
+LISTEN     0      128                       :::8080                                  :::*                  
+LISTEN     0      128                       :::22                                    :::*                  
+LISTEN     0      100                      ::1:25                                    :::*  
+通过 -r 选项解析 IP 和端口号：
+[root@node1 ~]# ss -tlr
+State      Recv-Q Send-Q       Local Address:Port                        Peer Address:Port                
+LISTEN     0      128                      *:ssh                                    *:*                    
+LISTEN     0      100              localhost:smtp                                   *:*                    
+LISTEN     0      128                     :::webcache                              :::*                    
+LISTEN     0      128                     :::ssh                                   :::*                    
+LISTEN     0      100              localhost:smtp                                  :::*   
+使用 -p 选项查看监听端口的程序名称：
+[root@node1 ~]# ss -tlp
+State      Recv-Q Send-Q       Local Address:Port                        Peer Address:Port                
+LISTEN     0      128                      *:ssh                                    *:*                     users:(("sshd",pid=6690,fd=3))
+LISTEN     0      100              127.0.0.1:smtp                                   *:*                     users:(("master",pid=6817,fd=13))
+LISTEN     0      128                     :::webcache                              :::*                     users:(("httpd",pid=19044,fd=4),("httpd",pid=19043,fd=4),("httpd",pid=19042,fd=4),("httpd",pid=19041,fd=4),("httpd",pid=19040,fd=4),("httpd",pid=19039,fd=4))
+LISTEN     0      128                     :::ssh                                   :::*                     users:(("sshd",pid=6690,fd=4))
+LISTEN     0      100                    ::1:smtp                                  :::*                     users:(("master",pid=6817,fd=14))
+最后一列就是运行的程序名称。还可以通过 grep 继续过滤：
+[root@node1 ~]# sudo ss -tlp | grep ssh
+LISTEN     0      128        *:ssh                      *:*                     users:(("sshd",pid=6690,fd=3))
+LISTEN     0      128       :::ssh                     :::*                     users:(("sshd",pid=6690,fd=4))
+查看建立的 TCP 连接：
+-a --all 对 TCP 协议来说，既包含监听的端口，也包含建立的连接：
+[root@node1 ~]# ss -tna
+State      Recv-Q Send-Q         Local Address:Port                        Peer Address:Port              
+LISTEN     0      128                        *:22                                     *:*                  
+LISTEN     0      100                127.0.0.1:25                                     *:*                  
+ESTAB      0      36           192.168.159.129:22                         192.168.159.1:49798   #建立的连接           
+LISTEN     0      128                       :::8080                                  :::*                  
+LISTEN     0      128                       :::22                                    :::*                  
+LISTEN     0      100                      ::1:25                                    :::*   
+显示概要信息：
+[root@node1 ~]# ss -s
+Total: 568 (kernel 1020)
+TCP:   7 (estab 1, closed 1, orphaned 0, synrecv 0, timewait 0/0), ports 0
+
+Transport Total     IP        IPv6
+*	  1020      -         -        
+RAW	  1         0         1        
+UDP	  3         2         1        
+TCP	  6         3         3        
+INET	  10        5         5        
+FRAG	  0         0         0    
+将本地或者远程端口和一个数比较
+可以使用下面的语法做端口号的过滤：
+ss dport OP PORT
+ss sport OP PORT
+OP 可以代表以下任意一个（需要对尖括号使用转义符）：
+<=	le	小于或等于某个端口号
+>=	ge	大于或等于某个端口号
+==	eq	等于某个端口号
+!=	ne	不等于某个端口号
+>	gt	大于某个端口号
+<	lt	小于某个端口号
+示例1：
+[root@node1 ~]# ss -tunl sport lt 50
+Netid  State      Recv-Q Send-Q      Local Address:Port                     Peer Address:Port              
+tcp    LISTEN     0      128                     *:22                                  *:*                  
+tcp    LISTEN     0      100             127.0.0.1:25                                  *:*                  
+tcp    LISTEN     0      128                    :::22                                 :::*                  
+tcp    LISTEN     0      100                   ::1:25                                 :::*   
+或者：
+[root@node1 ~]# ss -tunl sport \< 50
+Netid  State      Recv-Q Send-Q      Local Address:Port                     Peer Address:Port              
+tcp    LISTEN     0      128                     *:22                                  *:*                  
+tcp    LISTEN     0      100             127.0.0.1:25                                  *:*                  
+tcp    LISTEN     0      128                    :::22                                 :::*                  
+tcp    LISTEN     0      100                   ::1:25                                 :::*  
+ss 命令还可以通过 TCP 连接的状态进行过滤：
+状态：
+established
+syn-sent
+syn-recv
+fin-wait-1
+fin-wait-2
+time-wait
+closed
+close-wait
+last-ack
+listening
+closing
+除了上面的 TCP 状态，还可以使用下面这些状态：
+all	列出所有的 TCP 状态。
+connected	列出除了 listening 和 closing 之外的所有 TCP 状态。
+synchronized	列出除了 syn-sent 之外的所有 TCP 状态。
+bucket	列出 maintained 的状态，如：time-wait 和 syn-recv。
+big	列出和 bucket 相反的状态。
+举例：
+[root@node1 ~]# ss -4 state listening
+Netid  Recv-Q Send-Q         Local Address:Port                          Peer Address:Port                
+tcp    0      128                        *:ssh                                      *:*                    
+tcp    0      100                127.0.0.1:smtp                                     *:*   
+同时过滤 TCP 的状态和端口号
+(注意下面命令中的转义符和空格，都是必须的。如果不用转义符，可以使用单引号)：
+下面的命令显示所有状态为 established 的 ssh 连接：
+[root@node1 ~]# ss -4n  state listening
+Netid  Recv-Q Send-Q           Local Address:Port                          Peer Address:Port              
+tcp    0      128                          *:22                                       *:*                  
+tcp    0      100                  127.0.0.1:25                                       *:*  
+
+和netstat效率对比：
+[root@node1 ~]# time netstat
+real	0m0.089s
+user	0m0.018s
+sys	0m0.065s
+[root@node1 ~]# time ss
+real	0m0.006s
+user	0m0.006s
+sys	0m0.001s

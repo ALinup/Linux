@@ -58,4 +58,4 @@ iptables -I FORWARD -m state -d 192.168.122.0/24 --state NEW,RELATED,ESTABLISHED
 
 （2）添加nat 表的prerouting链
 
-iptables -t nat -I PREROUTING -p tcp --dport 22 -j DNAT --to-destination 192.168.122.183:22   //连接宿主机ssh跳转到虚拟机
+iptables -t nat -I PREROUTING -p tcp --dport 22 -j DNAT --to-destination 192.168.122.183:22   //连接宿主机ssh（端口号22）跳转到虚拟机

@@ -1,5 +1,6 @@
-°²×°lrzsz£º
+å®‰è£…lrzszï¼š
 yum install -y lrzsz
-ÓÃrz½«±¾µØÎÄ¼þÉÏ´«µ½·þÎñÆ÷£¬ÓÃsz ÎÄ¼þÂ·¾¶£¬½«·þÎñÆ÷ÎÄ¼þÏÂÔØµ½±¾µØ
-[root@localhost ~]# sz ·þÎñÆ÷ÉÏÎÄ¼þÂ·¾¶
+ç”¨rzå°†æœ¬åœ°æ–‡ä»¶ä¸Šä¼ åˆ°æœåŠ¡å™¨ï¼Œç”¨sz æ–‡ä»¶è·¯å¾„ï¼Œå°†æœåŠ¡å™¨æ–‡ä»¶ä¸‹è½½åˆ°æœ¬åœ°
+[root@localhost ~]# sz æœåŠ¡å™¨ä¸Šæ–‡ä»¶è·¯å¾„
 
+ä½¿ç”¨xftpå·¥å…·ï¼Œè¿žæŽ¥sftpå†ä¸Šä¼ æ–‡ä»¶

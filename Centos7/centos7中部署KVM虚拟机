@@ -50,3 +50,12 @@ virsh list --all //查看虚拟机状态
 #删除虚拟机
 virsh shutdown c7-1 //先关闭
 virsh undefine c7-1 //再删除
+
+9、端口映射
+（1）添加filter 表的forward链
+
+iptables -I FORWARD -m state -d 192.168.122.0/24 --state NEW,RELATED,ESTABLISHED -j ACCEPT
+
+（2）添加nat 表的prerouting链
+
+iptables -t nat -I PREROUTING -p tcp --dport 22 -j DNAT --to-destination 192.168.122.183:22   //访问宿主机22端口跳转到虚拟机22端口

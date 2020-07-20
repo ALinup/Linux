@@ -1,20 +1,21 @@
-# screen //创建 screen 终端
+1、新建一个叫yourname的session：
+screen -S yourname
 
-# screen vi /home/file //创建 screen 终端 ，并执行 vi命令
+2、离开 screen 终端：
+ctrl+d
 
-离开 screen 终端：ctrl+d
+3、列出当前所有的session：
+screen -ls
+[root@www ~]# screen -ls
+There is a screen on:
+	35229.yourname	(Detached)
+1 Socket in /var/run/screen/S-root.
 
-# screen -ls  //显示已创建的screen终端 
-There are screens on:
-	17631.pts-0.localhost	(Detached)
-	17598.pts-0.localhost	(Detached)
-2 Sockets in /var/run/screen/S-root.
+4、回到yourname这个session：
+screen -r yourname
 
-# screen -r 17631 //连接 screen_id 为 17631 的 screen终端
+5、远程detach某个session：
+screen -d yourname
 
-其他命令：
-screen -S yourname -> 新建一个叫yourname的session
-screen -ls         -> 列出当前所有的session
-screen -r yourname -> 回到yourname这个session
-screen -d yourname -> 远程detach某个session
-screen -d -r yourname -> 结束当前session并回到yourname这个session
+6、结束当前session并回到yourname这个session：
+screen -d -r yourname

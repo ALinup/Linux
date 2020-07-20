@@ -14,7 +14,7 @@ There is a screen on:
 4、回到yourname这个session：
 screen -r yourname
 
-5、远程detach某个session：
+5、远程detach某个session（脱离之前窗口，使之能使当前窗口连接）：
 screen -d yourname
 
 6、结束当前session并回到yourname这个session：

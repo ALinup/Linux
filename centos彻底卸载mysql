@@ -1,0 +1,24 @@
+1、查看是否安装有mysql（以下方法任选其一）
+方法一：rpm -qa | grep -i mysql
+方法二：yum list install mysql*
+2、卸载mysql安装包
+yum remove mysql mysql-server mysql-libs compat-mysql51
+yum remove mysql-community-release
+rpm -e --nodeps mysql-community-libs-5.7.22-1.el7.x86_64
+rpm -e –nodeps mysql57-community-release-el7-11.noarch
+通过卸载查询不到有关mysql的任何东西
+3、删除残留的mysql目录或文件
+查询mysql安装目录：
+whereis mysql
+find / -name mysql
+删除查询出的目录：
+rm -rf 目录名
+通过删除查询不到有关mysql的任何东西
+4、继续删除
+删除配置文件：
+rm –rf /usr/my.cnf
+rm -rf /root/.mysql_sercret
+删除mysql开机自启动服务：
+chkconfig --list | grep -i mysql
+chkconfig --del mysqld  // 服务名为你设置时候自己设置的名字
+至此就卸载干净了！

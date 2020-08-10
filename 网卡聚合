@@ -1,11 +1,11 @@
-Íø¿¨¾ÛºÏ£º
-Íø¿¨eno1ºÍeno2¾ÛºÏµ½Íø¿¨eth0ÉÏ£º
+ç½‘å¡èšåˆï¼š
+ç½‘å¡eno1å’Œeno2èšåˆåˆ°ç½‘å¡eth0ä¸Šï¼š
 nmcli connection add type bond ifname eth0 mode 1
 nmcli connection add type bond-slave ifname eno1 master eth0
 nmcli connection add type bond-slave ifname eno2 master eth0
-Íø¿¨eno3ºÍeno4¾ÛºÏµ½Íø¿¨eth1ÉÏ£º
+ç½‘å¡eno3å’Œeno4èšåˆåˆ°ç½‘å¡eth1ä¸Šï¼š
 nmcli connection add type bond ifname eth1 mode 1
 nmcli connection add type bond-slave ifname eno3 master eth1
 nmcli connection add type bond-slave ifname en04 master eth1
-²é¿´ÅäÖÃµÄ¾ÛºÏÍø¿¨£ºnmcli con sh
-ÒÆ³ı¾ÛºÏ£ºnmcli con delete  slave-eno1
+æŸ¥çœ‹é…ç½®çš„èšåˆç½‘å¡ï¼šnmcli con sh
+ç§»é™¤èšåˆï¼šnmcli con delete  slave-eno1

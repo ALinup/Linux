@@ -1,0 +1,14 @@
+ubuntu18:
+vi /etc/cloud/cloud.cfg
+将preserve_hostname： false修改为true
+ubuntu16:
+vi /etc/hostname
+修改主机名
+vi /etc/hosts
+在ip后面修改主机名
+reboot生效
+
+centos7:
+hostnamectl set-hostname 主机名
+
+

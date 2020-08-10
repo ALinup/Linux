@@ -1,0 +1,106 @@
+系统 
+版本
+确定是64位还是32位
+uname -a
+查看更多信息
+more /etc/*release
+
+CPU
+总核数=物理CPU个数 x 每颗物理CPU的核数
+总逻辑CPU个数 = 物理CPU个数 x 每颗物理CPU的核数 x 超线程数
+查看物理CPU个数
+cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l
+查看每颗物理CPU中core的个数（即核数）
+cat /proc/cpuinfo | grep "cpu cores" | uniq
+查看逻辑CPU的个数
+cat /proc/cpuinfo | grep "processor" | wc -l
+查看CPU信息（型号）
+cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c
+查看CPU详细信息
+cat /proc/cpuinfo
+
+运行模式
+查看CPU运行在多少位模式下
+getconf LONG_BIT
+如果是32，说明当前CPU运行在32bit模式下，但不代表CPU不支持64bit
+cat /proc/cpuinfo | grep flags | grep 'lm' | wc -l
+结果大于0，说明支持64bit计算，lm指long mode,支持lm则是64bit
+
+计算机名
+hostname
+
+查看环境变量
+env
+
+系统运行
+系统运行时间
+uptime
+02:16:07                               // 系统当前时间
+
+up 36 days, 27 min                     // 主机已运行时间,36天27分钟，时间越大，说明你的机器越稳定。
+
+7 users                                // 用户连接数，是总连接数而不是用户数
+
+load average: 1.38, 1.36, 1.34         // 系统平均负载，统计最近1，5，15分钟的系统平均负载
+查看平均负载
+cat /proc/loadavg
+前面三个值分别对应系统当前1分钟、5分钟、15分钟内的平均load；
+后面的1个分数，分母表示系统进程总数，分子表示正在运行的进程数；
+最后一个数字表示最近运行的进程ID。
+
+资源
+内存
+内存详细信息
+cat /proc/meminfo
+MemTotal总内存，MemFree可用内存
+查看可用内存（-k，单位是k；-m，单位是m；-g，单位是g）
+free -m
+free -g
+
+硬盘
+磁盘和分区
+查看各分区使用情况
+df -h
+查看指定目录的大小
+du -sh /root
+查看所有分区
+fdisk -l
+查看所有交换分区
+swapon -s
+
+网络
+网络属性信息
+查看所有网络接口的属性
+ifconfig
+带宽
+ethtool 网卡名
+主要查看speed
+查看路由表
+route -n
+查看所有监听端口
+netstat -ntpl
+查看所有已经建立的连接
+netstat -napt
+查看某端口使用情况
+lsof -i:端口号
+netstat -apn | grep 端口号
+
+进程
+查看进程
+ps -ef
+ps -ef | grep 进程名 进行过滤
+ps -aux 可以看到进程占用CPU，内存情况
+实时显示进程状态
+top
+
+用户
+查看用户
+查看活动用户
+w
+查看指定用户的信息
+id root
+id oracle
+查看用户登陆日志
+last
+查看系统所有用户
+cut -d: -f1 /etc/passwd

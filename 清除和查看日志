@@ -1,4 +1,4 @@
-Çå³ıµÇÂ¼ÈÕÖ¾£º
+æ¸…é™¤ç™»å½•æ—¥å¿—ï¼š
 echo >/var/log/wtmp & echo >/var/log/btmp & echo >/var/log/lastlog & echo >/root/.bash_history & history -c
-²é¿´ÏµÍ³´íÎóÈÕÖ¾£º
+æŸ¥çœ‹ç³»ç»Ÿé”™è¯¯æ—¥å¿—ï¼š
 cat /var/log/messages | grep error

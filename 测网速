@@ -1,11 +1,11 @@
-ubuntu18£¬ubuntu16:
+ubuntu18ï¼Œubuntu16:
 apt-get install speedtest-cli
 speedtest-cli
 
 centos7:
-ÏÂÔØ°²×°°ü£º
+ä¸‹è½½å®‰è£…åŒ…ï¼š
 wget https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py
-¸³Óè¿ÉÖ´ĞĞÈ¨ÏŞ£º
+èµ‹äºˆå¯æ‰§è¡Œæƒé™ï¼š
 chmod +x speedtest.py
-ÔËĞĞ£º
+è¿è¡Œï¼š
 ./speedtest.py
